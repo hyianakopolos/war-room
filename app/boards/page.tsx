@@ -1,8 +1,4 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
-import Link from 'next/link';
-
 interface Player {
   name: string;
   position: string;
@@ -19,7 +15,6 @@ export default function BoardsPage() {
   const [newBoard, setNewBoard] = useState("");
   const [expandedBoard, setExpandedBoard] = useState<string | null>(null);
 
-  // Load boards and players from localStorage
   useEffect(() => {
     const savedBoards = localStorage.getItem("boards");
     if (savedBoards) setBoards(JSON.parse(savedBoards));
@@ -28,7 +23,6 @@ export default function BoardsPage() {
     if (savedPlayers) setPlayers(JSON.parse(savedPlayers));
   }, []);
 
-  // Add new board
   const addBoard = () => {
     if (!newBoard) return;
     const updatedBoards = [...boards, newBoard];
@@ -37,14 +31,12 @@ export default function BoardsPage() {
     setNewBoard("");
   };
 
-  // Delete board
   const deleteBoard = (boardToDelete: string) => {
     const updatedBoards = boards.filter(b => b !== boardToDelete);
     setBoards(updatedBoards);
     localStorage.setItem("boards", JSON.stringify(updatedBoards));
   };
 
-  // Filter players by board
   const getPlayersForBoard = (board: string) => {
     return players.filter(p => p.board === board);
   };
@@ -57,13 +49,11 @@ export default function BoardsPage() {
 
       <h1 style={{ fontSize: "28px", color: "#3b82f6", marginBottom: "20px" }}>BOARDS</h1>
 
-      {/* Add New Board */}
       <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
         <input type="text" placeholder="New Board Name" value={newBoard} onChange={e => setNewBoard(e.target.value)} style={{ padding: "10px", flexGrow: 1, background: "#111", color: "#fff", border: "1px solid #333" }} />
         <button onClick={addBoard} style={{ padding: "10px", background: "#3b82f6", color: "#fff", border: "none", cursor: "pointer" }}>Add Board</button>
       </div>
 
-      {/* Board List */}
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         {boards.map((board, idx) => (
           <div key={idx} style={{ background: "#111", padding: "15px", border: "1px solid #3b82f6" }}>
@@ -71,8 +61,6 @@ export default function BoardsPage() {
               <span style={{ cursor: "pointer" }} onClick={() => setExpandedBoard(expandedBoard === board ? null : board)}>{board}</span>
               <button onClick={() => deleteBoard(board)} style={{ background: "#ef4444", color: "#fff", border: "none", padding: "5px 10px", cursor: "pointer" }}>Delete</button>
             </div>
-
-            {/* Show players in this board if expanded */}
             {expandedBoard === board && (
               <div style={{ marginTop: "10px", paddingLeft: "10px" }}>
                 {getPlayersForBoard(board).length > 0 ? (
