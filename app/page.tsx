@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from 'next/link';
 
 interface Player {
   name: string;
@@ -54,6 +55,10 @@ export default function Page() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "20px", fontFamily: "Arial" }}>
+      <div style={{ marginBottom: "20px" }}>
+        <Link href="/boards" style={{ color: "#3b82f6", textDecoration: "underline" }}>Go to Boards Page →</Link>
+      </div>
+
       <h1 style={{ fontSize: "28px", color: "#3b82f6", marginBottom: "20px" }}>WAR ROOM</h1>
 
       {/* Search Bar */}
