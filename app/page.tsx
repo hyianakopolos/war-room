@@ -106,6 +106,24 @@ useEffect(() => {
               <p>Class: {selectedPlayer.year}</p>
               <p>Board: {selectedPlayer.board}</p>
               <p>Contacted: {selectedPlayer.contacted ? "Yes" : "No"}</p>
+              <div style={{ marginTop: "10px" }}>
+  <select
+    value={selectedPlayer.board}
+    onChange={(e) => movePlayerToBoard(selectedPlayer, e.target.value)}
+    style={{ width: "100%", padding: "10px", background: "#111", color: "#fff", border: "1px solid #333" }}
+  >
+    {boards.map((board) => (
+      <option key={board} value={board}>{board}</option>
+    ))}
+  </select>
+
+  <button
+    onClick={() => movePlayerToBoard(selectedPlayer, selectedPlayer.board)}
+    style={{ width: "100%", marginTop: "10px", padding: "10px", background: "#3b82f6", color: "#fff", border: "none", cursor: "pointer" }}
+  >
+    Add to Board
+  </button>
+</div>
 
               <button onClick={() => window.open(selectedPlayer.twitter)} style={{ width: "100%", marginTop: "10px", padding: "10px", background: "#3b82f6", border: "none", color: "#fff", cursor: "pointer" }}>Open Twitter</button>
 
