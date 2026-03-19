@@ -62,15 +62,6 @@ useEffect(() => {
     setNewPlayer({ name: "", position: "", school: "", year: "", twitter: "" });
   };
 
-  const movePlayerToBoard = (player: Player, board: string) => {
-    setPlayers(players.map(p => p === player ? { ...p, board } : p));
-  };
-
-  const toggleContacted = (player: Player) => {
-    setPlayers(players.map(p => p === player ? { ...p, contacted: !p.contacted } : p));
-  };
-
-  return (
     <div style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "20px", fontFamily: "Arial" }}>
       <h1 style={{ fontSize: "28px", color: "#3b82f6", marginBottom: "20px" }}>THE WAR ROOM</h1>
 
