@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface Player {
   name: string;
@@ -15,6 +16,7 @@ interface Player {
 }
 
 export default function Page() {
+  const router = useRouter();
   const [players, setPlayers] = useState<Player[]>([]);
   const [boards, setBoards] = useState<string[]>([]);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
@@ -39,15 +41,20 @@ export default function Page() {
     setNewPlayer({ name: "", position: "", school: "", year: "", twitter: "" });
   };
 
-  // Function to move player to a board
-  const movePlayerToBoard = (player: Player, board: string) => {
+  // Function to move player to a board and redirect to Boards page
+  const movePlayerToBoardAndRedirect = (player: Player, board: string) => {
     if (!player || !board) return;
+
     const updatedPlayers = players.map(p => p === player ? { ...p, board } : p);
     setPlayers(updatedPlayers);
     localStorage.setItem("players", JSON.stringify(updatedPlayers));
+
     if (selectedPlayer === player) {
       setSelectedPlayer({ ...player, board });
     }
+
+    // Redirect to Boards page
+    router.push('/boards');
   };
 
   // Search filtered players
@@ -103,14 +110,14 @@ export default function Page() {
 
           {/* Add to Board Dropdown + Button */}
           <div style={{ marginTop: "15px" }}>
-            <select value={selectedPlayer.board || ""} onChange={(e) => movePlayerToBoard(selectedPlayer, e.target.value)} style={{ width: "100%", padding: "10px", background: "#111", color: "#fff", border: "1px solid #333" }}>
+            <select value={selectedPlayer.board || ""} onChange={(e) => setSelectedPlayer({ ...selectedPlayer, board: e.target.value })} style={{ width: "100%", padding: "10px", background: "#111", color: "#fff", border: "1px solid #333" }}>
               <option value="" disabled>Select Board</option>
               {boards.map(board => (
                 <option key={board} value={board}>{board}</option>
               ))}
             </select>
 
-            <button onClick={() => movePlayerToBoard(selectedPlayer, selectedPlayer.board || boards[0] || "")} style={{ width: "100%", marginTop: "10px", padding: "10px", background: "#3b82f6", color: "#fff", border: "none", cursor: "pointer" }}>Add to Board</button>
+            <button onClick={() => selectedPlayer.board && movePlayerToBoardAndRedirect(selectedPlayer, selectedPlayer.board)} style={{ width: "100%", marginTop: "10px", padding: "10px", background: "#3b82f6", color: "#fff", border: "none", cursor: "pointer" }}>Send to Board</button>
           </div>
         </div>
       )}
