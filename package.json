@@ -11,5 +11,10 @@
     "react": "latest",
     "react-dom": "latest",
     "framer-motion": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@types/react": "^18.2.14",
+    "@types/node": "^20.6.3"
   }
 }
