@@ -22,6 +22,10 @@ export default function Page() {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [newPlayer, setNewPlayer] = useState({ name: "", position: "", school: "", year: "", twitter: "" });
   const [boards, setBoards] = useState<string[]>([]);
+  const movePlayerToBoard = (player: Player, board: string) => {
+  setPlayers(players.map(p => p === player ? { ...p, board } : p));
+  localStorage.setItem("players", JSON.stringify(players.map(p => p === player ? { ...p, board } : p)));
+};
 
 useEffect(() => {
   const savedBoards = localStorage.getItem("boards");
