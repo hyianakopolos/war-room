@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -27,19 +29,12 @@ export default function Page() {
       />
 
       <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "20px" }}>
-        {/* Player List */}
         <div>
           {filteredPlayers.map((player, index) => (
             <motion.div key={index} whileHover={{ scale: 1.02 }}>
               <div
                 onClick={() => setSelectedPlayer(player)}
-                style={{
-                  background: "#111",
-                  border: "1px solid #222",
-                  padding: "15px",
-                  marginBottom: "10px",
-                  cursor: "pointer"
-                }}
+                style={{ background: "#111", border: "1px solid #222", padding: "15px", marginBottom: "10px", cursor: "pointer" }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <div>
@@ -53,7 +48,6 @@ export default function Page() {
           ))}
         </div>
 
-        {/* Player Panel */}
         <div>
           {selectedPlayer ? (
             <div style={{ background: "#111", border: "1px solid #3b82f6", padding: "15px" }}>
@@ -68,13 +62,8 @@ export default function Page() {
                 Open Twitter
               </button>
 
-              <button style={{ width: "100%", marginTop: "10px", padding: "10px", cursor: "pointer" }}>
-                Add to Board
-              </button>
-
-              <button style={{ width: "100%", marginTop: "10px", padding: "10px", cursor: "pointer" }}>
-                Mark Contacted
-              </button>
+              <button style={{ width: "100%", marginTop: "10px", padding: "10px", cursor: "pointer" }}>Add to Board</button>
+              <button style={{ width: "100%", marginTop: "10px", padding: "10px", cursor: "pointer" }}>Mark Contacted</button>
             </div>
           ) : (
             <div style={{ color: "#555" }}>Select a player</div>
