@@ -3,14 +3,29 @@
 import React, { useState, useEffect } from "react";
 import Link from 'next/link';
 
+interface Player {
+  name: string;
+  position: string;
+  school: string;
+  year: string;
+  twitter: string;
+  board: string;
+  contacted: boolean;
+}
+
 export default function BoardsPage() {
   const [boards, setBoards] = useState<string[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [newBoard, setNewBoard] = useState("");
+  const [expandedBoard, setExpandedBoard] = useState<string | null>(null);
 
-  // Load boards from localStorage
+  // Load boards and players from localStorage
   useEffect(() => {
     const savedBoards = localStorage.getItem("boards");
     if (savedBoards) setBoards(JSON.parse(savedBoards));
+
+    const savedPlayers = localStorage.getItem("players");
+    if (savedPlayers) setPlayers(JSON.parse(savedPlayers));
   }, []);
 
   // Add new board
@@ -27,6 +42,11 @@ export default function BoardsPage() {
     const updatedBoards = boards.filter(b => b !== boardToDelete);
     setBoards(updatedBoards);
     localStorage.setItem("boards", JSON.stringify(updatedBoards));
+  };
+
+  // Filter players by board
+  const getPlayersForBoard = (board: string) => {
+    return players.filter(p => p.board === board);
   };
 
   return (
@@ -46,9 +66,26 @@ export default function BoardsPage() {
       {/* Board List */}
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         {boards.map((board, idx) => (
-          <div key={idx} style={{ background: "#111", padding: "15px", border: "1px solid #3b82f6", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span>{board}</span>
-            <button onClick={() => deleteBoard(board)} style={{ background: "#ef4444", color: "#fff", border: "none", padding: "5px 10px", cursor: "pointer" }}>Delete</button>
+          <div key={idx} style={{ background: "#111", padding: "15px", border: "1px solid #3b82f6" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ cursor: "pointer" }} onClick={() => setExpandedBoard(expandedBoard === board ? null : board)}>{board}</span>
+              <button onClick={() => deleteBoard(board)} style={{ background: "#ef4444", color: "#fff", border: "none", padding: "5px 10px", cursor: "pointer" }}>Delete</button>
+            </div>
+
+            {/* Show players in this board if expanded */}
+            {expandedBoard === board && (
+              <div style={{ marginTop: "10px", paddingLeft: "10px" }}>
+                {getPlayersForBoard(board).length > 0 ? (
+                  getPlayersForBoard(board).map((player, pIdx) => (
+                    <div key={pIdx} style={{ borderBottom: "1px solid #333", padding: "5px 0" }}>
+                      {player.name} - {player.position} ({player.school})
+                    </div>
+                  ))
+                ) : (
+                  <p style={{ fontStyle: "italic" }}>No players in this board yet.</p>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>
