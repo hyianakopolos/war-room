@@ -21,6 +21,12 @@ export default function Page() {
   const [search, setSearch] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [newPlayer, setNewPlayer] = useState({ name: "", position: "", school: "", year: "", twitter: "" });
+  const [boards, setBoards] = useState<string[]>([]);
+
+useEffect(() => {
+  const savedBoards = localStorage.getItem("boards");
+  if (savedBoards) setBoards(JSON.parse(savedBoards));
+}, []);
 
   // Load from localStorage
   useEffect(() => {
