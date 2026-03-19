@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const mockPlayers = [
@@ -19,33 +16,39 @@ export default function WarRoomApp() {
   );
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <h1 className="text-3xl font-bold mb-6 text-blue-400">THE WAR ROOM</h1>
+    <div style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "20px", fontFamily: "Arial" }}>
+      <h1 style={{ fontSize: "28px", color: "#3b82f6", marginBottom: "20px" }}>THE WAR ROOM</h1>
 
-      <Input
+      <input
         placeholder="Search: 2026 DB New England..."
-        className="mb-6 bg-gray-900 border-gray-700"
+        style={{ width: "100%", padding: "10px", marginBottom: "20px", background: "#111", color: "#fff", border: "1px solid #333" }}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <div className="grid grid-cols-3 gap-6">
+      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "20px" }}>
         {/* Player List */}
-        <div className="col-span-2 space-y-4">
+        <div>
           {filteredPlayers.map((player, index) => (
             <motion.div key={index} whileHover={{ scale: 1.02 }}>
-              <Card
-                className="bg-gray-900 border border-gray-800 cursor-pointer"
+              <div
                 onClick={() => setSelectedPlayer(player)}
+                style={{
+                  background: "#111",
+                  border: "1px solid #222",
+                  padding: "15px",
+                  marginBottom: "10px",
+                  cursor: "pointer"
+                }}
               >
-                <CardContent className="p-4 flex justify-between">
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <div>
-                    <p className="font-semibold">{player.name}</p>
-                    <p className="text-sm text-gray-400">{player.position} | {player.school}</p>
+                    <p style={{ fontWeight: "bold" }}>{player.name}</p>
+                    <p style={{ fontSize: "12px", color: "#aaa" }}>{player.position} | {player.school}</p>
                   </div>
-                  <div className="text-blue-400">{player.year}</div>
-                </CardContent>
-              </Card>
+                  <div style={{ color: "#3b82f6" }}>{player.year}</div>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -53,30 +56,32 @@ export default function WarRoomApp() {
         {/* Player Panel */}
         <div>
           {selectedPlayer ? (
-            <Card className="bg-gray-900 border border-blue-500">
-              <CardContent className="p-4 space-y-4">
-                <h2 className="text-xl font-bold">{selectedPlayer.name}</h2>
-                <p>{selectedPlayer.position} - {selectedPlayer.school}</p>
-                <p>Class: {selectedPlayer.year}</p>
+            <div style={{ background: "#111", border: "1px solid #3b82f6", padding: "15px" }}>
+              <h2 style={{ fontSize: "20px", marginBottom: "10px" }}>{selectedPlayer.name}</h2>
+              <p>{selectedPlayer.position} - {selectedPlayer.school}</p>
+              <p>Class: {selectedPlayer.year}</p>
 
-                <Button className="w-full bg-blue-500" onClick={() => window.open(selectedPlayer.twitter)}>
-                  Open Twitter
-                </Button>
+              <button
+                style={{ width: "100%", marginTop: "10px", padding: "10px", background: "#3b82f6", border: "none", color: "#fff" }}
+                onClick={() => window.open(selectedPlayer.twitter)}
+              >
+                Open Twitter
+              </button>
 
-                <Button className="w-full" variant="outline">
-                  Add to Board
-                </Button>
+              <button style={{ width: "100%", marginTop: "10px", padding: "10px" }}>
+                Add to Board
+              </button>
 
-                <Button className="w-full" variant="outline">
-                  Mark Contacted
-                </Button>
-              </CardContent>
-            </Card>
+              <button style={{ width: "100%", marginTop: "10px", padding: "10px" }}>
+                Mark Contacted
+              </button>
+            </div>
           ) : (
-            <div className="text-gray-500">Select a player</div>
+            <div style={{ color: "#555" }}>Select a player</div>
           )}
         </div>
       </div>
     </div>
   );
 }
+git reset --hard <previous-commit-hash>
