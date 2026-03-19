@@ -23,7 +23,7 @@ export default function Page() {
   const [search, setSearch] = useState("");
   const [newPlayer, setNewPlayer] = useState({ name: "", position: "", school: "", year: "", twitter: "" });
 
-  // Load players and boards from localStorage on mount
+  // Load players and boards from localStorage
   useEffect(() => {
     const savedPlayers = localStorage.getItem("players");
     if (savedPlayers) setPlayers(JSON.parse(savedPlayers));
@@ -41,23 +41,22 @@ export default function Page() {
     setNewPlayer({ name: "", position: "", school: "", year: "", twitter: "" });
   };
 
-  // Function to move player to a board and redirect to Boards page
+  // Move player to board and save + redirect
   const movePlayerToBoardAndRedirect = (player: Player, board: string) => {
     if (!player || !board) return;
 
     const updatedPlayers = players.map(p => p === player ? { ...p, board } : p);
     setPlayers(updatedPlayers);
-    localStorage.setItem("players", JSON.stringify(updatedPlayers));
+    localStorage.setItem("players", JSON.stringify(updatedPlayers)); // save updated player
 
     if (selectedPlayer === player) {
       setSelectedPlayer({ ...player, board });
     }
 
-    // Redirect to Boards page
-    router.push('/boards');
+    router.push('/boards'); // redirect to Boards page
   };
 
-  // Search filtered players
+  // Filter players
   const filteredPlayers = players.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
@@ -68,16 +67,10 @@ export default function Page() {
 
       <h1 style={{ fontSize: "28px", color: "#3b82f6", marginBottom: "20px" }}>WAR ROOM</h1>
 
-      {/* Search Bar */}
-      <input
-        type="text"
-        placeholder="Search Players..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{ width: "100%", padding: "10px", marginBottom: "20px", background: "#111", color: "#fff", border: "1px solid #333" }}
-      />
+      {/* Search */}
+      <input type="text" placeholder="Search Players..." value={search} onChange={e => setSearch(e.target.value)} style={{ width: "100%", padding: "10px", marginBottom: "20px", background: "#111", color: "#fff", border: "1px solid #333" }} />
 
-      {/* Add New Player Form */}
+      {/* Add Player Form */}
       <div style={{ marginBottom: "30px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
         <input type="text" placeholder="Name" value={newPlayer.name} onChange={e => setNewPlayer({ ...newPlayer, name: e.target.value })} />
         <input type="text" placeholder="Position" value={newPlayer.position} onChange={e => setNewPlayer({ ...newPlayer, position: e.target.value })} />
@@ -108,7 +101,7 @@ export default function Page() {
           <p>Contacted: {selectedPlayer.contacted ? "Yes" : "No"}</p>
           <button onClick={() => window.open(selectedPlayer.twitter)} style={{ padding: "8px 12px", background: "#3b82f6", color: "#fff", border: "none", cursor: "pointer", marginTop: "10px" }}>Open Twitter</button>
 
-          {/* Add to Board Dropdown + Button */}
+          {/* Add to Board */}
           <div style={{ marginTop: "15px" }}>
             <select value={selectedPlayer.board || ""} onChange={(e) => setSelectedPlayer({ ...selectedPlayer, board: e.target.value })} style={{ width: "100%", padding: "10px", background: "#111", color: "#fff", border: "1px solid #333" }}>
               <option value="" disabled>Select Board</option>
