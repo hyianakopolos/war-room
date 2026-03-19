@@ -15,12 +15,6 @@ interface Player {
 }
 
 const defaultBoards = ["All Players", "Offer Soon", "Contacted"];
-const [boards, setBoards] = useState<string[]>([]);
-
-useEffect(() => {
-  const savedBoards = localStorage.getItem("boards");
-  if (savedBoards) setBoards(JSON.parse(savedBoards));
-}, []);
 
 export default function Page() {
   const [players, setPlayers] = useState<Player[]>([]);
