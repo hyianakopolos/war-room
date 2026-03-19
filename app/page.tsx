@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 interface Player {
   name: string;
@@ -23,8 +24,8 @@ export default function Page() {
 
   // Load from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem("players");
-    if (saved) setPlayers(JSON.parse(saved));
+    const savedPlayers = localStorage.getItem("players");
+    if (savedPlayers) setPlayers(JSON.parse(savedPlayers));
   }, []);
 
   // Save to localStorage
@@ -53,6 +54,11 @@ export default function Page() {
   return (
     <div style={{ minHeight: "100vh", background: "#000", color: "#fff", padding: "20px", fontFamily: "Arial" }}>
       <h1 style={{ fontSize: "28px", color: "#3b82f6", marginBottom: "20px" }}>THE WAR ROOM</h1>
+
+      {/* Navigation */}
+      <Link href="/boards">
+        <button style={{ padding: "10px 15px", marginBottom: "20px", background: "#3b82f6", color: "#fff", border: "none", cursor: "pointer" }}>Go to Boards</button>
+      </Link>
 
       {/* Add Player Form */}
       <div style={{ marginBottom: "20px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
