@@ -7,7 +7,7 @@ const mockPlayers = [
   { name: "Tyrese Johnson", position: "LB", school: "Worcester Tech", year: "2026", twitter: "https://twitter.com" }
 ];
 
-export default function WarRoomApp() {
+export default function Page() {
   const [search, setSearch] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
@@ -62,17 +62,17 @@ export default function WarRoomApp() {
               <p>Class: {selectedPlayer.year}</p>
 
               <button
-                style={{ width: "100%", marginTop: "10px", padding: "10px", background: "#3b82f6", border: "none", color: "#fff" }}
+                style={{ width: "100%", marginTop: "10px", padding: "10px", background: "#3b82f6", border: "none", color: "#fff", cursor: "pointer" }}
                 onClick={() => window.open(selectedPlayer.twitter)}
               >
                 Open Twitter
               </button>
 
-              <button style={{ width: "100%", marginTop: "10px", padding: "10px" }}>
+              <button style={{ width: "100%", marginTop: "10px", padding: "10px", cursor: "pointer" }}>
                 Add to Board
               </button>
 
-              <button style={{ width: "100%", marginTop: "10px", padding: "10px" }}>
+              <button style={{ width: "100%", marginTop: "10px", padding: "10px", cursor: "pointer" }}>
                 Mark Contacted
               </button>
             </div>
